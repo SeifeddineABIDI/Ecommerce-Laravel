@@ -63,12 +63,12 @@
               <table class="table">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        {{-- <th>Id</th> --}}
                         <th>Nom</th>
                         <th>Catégorie</th>
                         <th>Sous Categorie</th>
                         <th>Quantité</th>
-                        <th>Prix en détail</th>
+                        {{-- <th>Prix en détail</th> --}}
                         <th>Prix en gros</th>
                         <th>Quantité minimale pour le gros</th>
                         <th>Description</th>
@@ -80,12 +80,12 @@
                     @foreach($products as $product)
                     <!-- Lignes du tableau (données fictives pour démonstration) -->
                     <tr>
-                        <td>{{$product ->id}} </td>
+                        {{-- <td>{{$product ->id}} </td> --}}
                         <td>{{$product ->nom}}</td>
                         <td>{{@$product ->sous_categorie->categorie->description}}</td>
                         <td>{{@$product ->sous_categorie->description}}</td>
                         <td>{{$product ->quantite}}</td>
-                        <td>{{$product ->prix_detail}}</td>
+                        {{-- <td>{{$product ->prix_detail}}</td> --}}
                         <td>{{$product ->prix_gros}}</td>
                         <td>{{$product ->quantite_gros}}</td>
                         <td>{{$product ->description}}</td>

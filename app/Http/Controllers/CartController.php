@@ -35,28 +35,14 @@ class CartController extends Controller
     {
         $cart = Cache::get('cart', []);
         $products = Product::whereIn('id', array_keys($cart))->get();
-    
+
         $subtotal = 0;
-        $itemCount = 0;
         foreach ($cart as $product) {
             $subtotal += $product['prix_gros'] * $product['quantity'];
-            $itemCount += $product['quantity'];
         }
-    
-        return view('cart.index', compact('cart', 'products', 'subtotal', 'itemCount'));
+
+        return view('cart.index', compact('cart', 'products', 'subtotal'));
     }
-    
-    public function itemCount()
-    {
-        $cart = Cache::get('cart', []);
-        $itemCount = 0;
-        foreach ($cart as $product) {
-            $itemCount += $product['quantity'];
-        }
-    
-        return response()->json(['success' => true, 'itemCount' => $itemCount]);
-    }
-        
 
     public function remove(Request $request, $productId)
     {
@@ -100,7 +86,11 @@ class CartController extends Controller
     }
     
     
-    
+    public function clearJustCache(Request $request)
+{
+    Cache::forget('cart');
+    return response()->json(['success' => true]);
+}
 
     public function clearCache()
     {

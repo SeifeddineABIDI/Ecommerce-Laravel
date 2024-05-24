@@ -42,8 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
     Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
-    Route::get('/cart/clear-cache', [CartController::class, 'clearCache'])->name('cart.clearCache');
-    Route::get('/cart/item-count', [CartController::class, 'itemCount']);
+    Route::post('/cart/clear-cache', [CartController::class, 'clearCache'])->name('cart.clearCache');
+    Route::post('/cart/clearcache', [CartController::class, 'clearJustCache'])->name('cart.clearCache');
 
     
 });

@@ -86,7 +86,7 @@
 						<label class="checkbox-field">
 							<input class="frm-input " name="have-code" id="have-code" value="" type="checkbox"><span>I have promo code</span>
 						</label>
-						<a class="btn btn-checkout" href="checkout.html">Check out</a>
+                        <a class="btn btn-checkout" href="#" id="checkout-btn">Check out</a>
 						<a class="link-to-shop" href="shop.html">Continue Shopping<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
 					</div>
 					<div class="update-clear">
@@ -614,10 +614,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
     updateOverallSubtotal(); // Initial call to set the subtotal when the page loads
 });
-
-
     </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkoutButton = document.getElementById('checkout-btn');
     
+        checkoutButton.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent the default link behavior
+            const userConfirmed = confirm('Are you sure you want to proceed to checkout?');
+    
+            if (userConfirmed) {
+                alert('Product purchased successfully!');
+                
+                // Clear cache via AJAX
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    
+                fetch('/cart/clearcache', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Redirect to the shop page
+                        window.location.href = 'http://127.0.0.1:8000/shop';
+                    } else {
+                        alert('Failed to clear the cache.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        });
+    });
+    </script>
 </body>
 </html>
 
