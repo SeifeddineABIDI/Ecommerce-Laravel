@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\SousCategorieController;
+use App\Http\Controllers\CartController;
 
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
@@ -34,6 +35,15 @@ Route::middleware('auth')->group(function () {
     //Route::get('/categorie/add', [CategorieController::class, 'add'])->name('vendeur.dashboardVendeur');
     Route::resource('categories', CategorieController::class);
     Route::resource('sous_categories', SousCategorieController::class);
+    Route::get('/shop', [ProductController::class, 'list'])->name('shop.index');
+    Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+    //CartRoutes
+    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+    Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::get('/cart/clear-cache', [CartController::class, 'clearCache'])->name('cart.clearCache');
+    Route::get('/cart/item-count', [CartController::class, 'itemCount']);
 
     
 });

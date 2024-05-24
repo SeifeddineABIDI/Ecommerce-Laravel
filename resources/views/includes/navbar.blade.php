@@ -74,11 +74,9 @@
 
   <ul class="">
     <li class="">
-        <i class="uil-folder"></i><a href="{{ route('dashboard') }}"> Dashboard</a>
+        <i class="uil-home"></i><a href="{{ url('/') }}"> Home</a>
     </li>
-    <li class="">
-        <i class="uil-folder"></i><a href="#"> Manage Catégories</a>
-    </li>
+
     @if(auth()->user()->role == 'vendeur')
     <li>
       <i class="uil-folder"></i><a href="{{ route('liste_produits') }}">Products</a>

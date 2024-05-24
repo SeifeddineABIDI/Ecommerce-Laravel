@@ -17,11 +17,21 @@
                                 @if (Route::has('login'))
                                    @auth
                                       <a title="Register or Login"  href="{{ url('/dashboard') }}" >Dashboard</a></li>
+                                      <li class="menu-item">
+                                        <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                                            @csrf
+                                            <a href="{{ route('logout') }}"
+                                               onclick="event.preventDefault();
+                                                         this.closest('form').submit();">
+                                                Logout
+                                            </a>
+                                        </form>
+                                    </li>
                                 @else
                                     <li class="menu-item" ><a title="Register or Login" href="{{ route('login') }}">Log in</a></li>
-                             @if (Route::has('register'))
+                             {{-- @if (Route::has('register'))
                                  <li class="menu-item" ><a title="Register or Login" href="{{ route('register') }}">Registre</a></li>
-                             @endif
+                             @endif --}}
                              @endauth
                              @endif   
                             <li class="menu-item lang-menu menu-item-has-children parent">
@@ -131,10 +141,10 @@
                                 <a href="{{ url('/about') }}" class="link-term mercado-item-title">About Us</a>
                             </li>
                             <li class="menu-item">
-                                <a href="shop.html" class="link-term mercado-item-title">Shop</a>
+                                <a href="{{ route('shop.index') }}" class="link-term mercado-item-title">Shop</a>
                             </li>
                             <li class="menu-item">
-                                <a href="cart.html" class="link-term mercado-item-title">Cart</a>
+                                <a href="{{ route('cart.index') }}" class="link-term mercado-item-title">Cart</a>
                             </li>
                             <li class="menu-item">
                                 <a href="checkout.html" class="link-term mercado-item-title">Checkout</a>

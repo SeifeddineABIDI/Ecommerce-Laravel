@@ -23,7 +23,15 @@ class ProductController extends Controller
         $sous_categories = SousCategorie::all();
         return view('product.ajouter', compact('categories', 'sous_categories'));
     }
+    public function index(){
+       
+        return view('shop.index');    }
 
+        public function list()
+        {
+            $products = Product::all();
+            return view('shop.index', compact('products'));
+        }
    
     public function ajouter_product_traitement(Request $request)
     {
@@ -92,7 +100,14 @@ public function delete_product($id){
     $product->delete();
     return redirect('/product');
 }
-
+public function show($id)
+{
+    $product = Product::find($id);
+    if (!$product) {
+        return redirect()->back()->with('error', 'Product not found!');
+    }
+    return view('product.details', compact('product'));
+}
     /**
      * Show the form for editing the specified resource.
      */
