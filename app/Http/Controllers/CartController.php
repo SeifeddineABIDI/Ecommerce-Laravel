@@ -10,8 +10,8 @@ class CartController extends Controller
     public function add(Request $request)
     {
         $productId = $request->input('product_id');
-        $quantity = 1; 
         $product = Product::find($productId); // Fetch the product details from the database
+        $quantity = $product->quantite_gros ?? 1; 
 
         $cart = Cache::get('cart', []);
         if (isset($cart[$productId])) {

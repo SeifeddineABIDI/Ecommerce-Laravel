@@ -13,6 +13,8 @@ class SousCategorie extends Model
     
     protected $fillable = [
         'description',
+        'categorie_id',
+
     ];
 
 

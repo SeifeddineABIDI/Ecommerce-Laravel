@@ -1,67 +1,102 @@
 @include('includes.head')
 <style>
+    body {
+        background-color: #1a1a1a;
+        color: #fff;
+    }
+
     .grid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end; /* Align items to the end of the main axis (right) */
-    margin-top: 100px; /* Adjust the margin as needed */
-}
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 100px;
+    }
 
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        border-radius: 4px;
+        background: linear-gradient(135deg, #0981d6, #0076c4);
+        color: #ffffff;
+        transition: background 0.3s ease;
+    }
 
-.btn {
-    display: inline-block;
-    padding: 8px 16px;
-    margin-bottom: 10px; /* Ajoutez un espacement entre le bouton et le tableau */
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff; /* Couleur de fond */
-    color: #ffffff; /* Couleur du texte */
-}
+    .btn:hover {
+        background: linear-gradient(135deg, #0099ff, #423ddb);
+    }
 
-.btn:hover {
-    background-color: #0056b3; /* Couleur de fond au survol */
-}
+    .table {
+        width: 80%;
+        border-collapse: separate;
+        border-spacing: 0 15px;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #2a2a2a;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+    }
 
-.table {
-    width: 80%; /* Adjust table width as needed */
-    border-collapse: collapse;
-    margin-top: 20px; /* Add spacing between the button and the table */
-    margin-left: 200px; /* Move the table to the right */
-    
-}
+    .table th,
+    .table td {
+        border: none;
+        padding: 12px 15px;
+        text-align: left;
+    }
 
+    .table th {
+        background: linear-gradient(135deg, #022842, #233d4d);
+        font-weight: bold;
+        color: #ffffff;
+        text-align: center;
+        border-radius: 10px 10px 0 0;
+    }
 
-.table th {
-    border: 1px solid #dddddd; /* Bordures */
-    padding: 8px;
-    text-align: left;
-}
-.table td {
-    border: 1px solid #dddddd; /* Bordures */
-    padding: 8px;
-    text-align: left;
-    color : white;
-}
+    .table td {
+        background-color: #333;
+        color: #ffffff;
+    }
 
-.table th {
-    background-color: #f2f2f2; /* Couleur de fond pour les en-têtes */
-    font-weight: bold;
-    margin-left: auto;
-}
+    .table tr {
+        border-radius: 10px;
+    }
+
+    .table tr td:first-child {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .table tr td:last-child {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .img-thumbnail {
+        border: none;
+        border-radius: 10px;
+    }
+
+    .alert {
+        background-color: #444;
+        border: none;
+        color: #fff;
+        border-radius: 10px;
+    }
 </style>
 <body>
-     @include('includes.navbar')
-        <div class="grid">
-              <!-- Tableau -->
-              <a href='/ajouter' class="btn btn-info">Ajouter produit</a>
-              <table class="table">
-                <thead>
+    @include('includes.navbar')
+    <div class="grid">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <thead class="thead-dark">
                     <tr>
                         {{-- <th>Id</th> --}}
                         <th>Nom</th>
@@ -78,7 +113,6 @@
                 </thead>
                 <tbody>
                     @foreach($products as $product)
-                    <!-- Lignes du tableau (données fictives pour démonstration) -->
                     <tr>
                         {{-- <td>{{$product ->id}} </td> --}}
                         <td>{{$product ->nom}}</td>
@@ -90,18 +124,19 @@
                         <td>{{$product ->quantite_gros}}</td>
                         <td>{{$product ->description}}</td>
                         <td>
-                            <img src="{{ asset('uploads/products/' . $product->image) }}" alt="Product Image" width="100">
-                        </td>                        <td>
-                            <!-- Actions (boutons, liens, etc.) -->
-                            <a href='/update-product/{{$product ->id}}' class="btn btn-info">Update</a>
-                            <a href='/delete-product/{{$product ->id}}' class="btn btn-danger">Delete</a>
+                            <img src="{{ asset('uploads/products/' . $product->image) }}" alt="Product Image" class="img-thumbnail" width="100">
+                        </td>
+                        <td>
+                            <a href='/update-product/{{$product->id}}' class="btn">Update</a>
+                            <a href='/delete-product/{{$product->id}}' class="btn" style="background-color: #dc3545;">Delete</a>
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        @include('includes.footer')
-</body>
+        <a href='/ajouter' class="btn">Ajouter produit</a>
 
-    
+    </div>
+    @include('includes.footer')
+</body>

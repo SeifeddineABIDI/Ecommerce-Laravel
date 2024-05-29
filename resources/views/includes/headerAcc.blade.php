@@ -16,8 +16,9 @@
                             <li class="menu-item" >
                                 @if (Route::has('login'))
                                    @auth
-                                      <a title="Register or Login"  href="{{ url('/dashboard') }}" >Dashboard</a></li>
-                                      <li class="menu-item">
+                                   @if(Auth::user()->role == 'vendeur')
+                                   <a title="Dashboard" href="{{ url('/product') }}">Dashboard</a>
+                               @endif                                      <li class="menu-item">
                                         <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                                             @csrf
                                             <a href="{{ route('logout') }}"
@@ -97,13 +98,19 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="wrap-icon-section minicart">
+                        @php
+                            $cart = Cache::get('cart');
+                            $cartCount = $cart ? count($cart) : 0;
+                        @endphp
+                        <div class="wrap-icon-section {{  $cartCount > 0 ? 'minicart' : '' }}">
                             <a href="#" class="link-direction">
                                 <i class="fa fa-shopping-basket" aria-hidden="true"></i>
-                                <div class="left-info">
-                                    <span class="index">4 items</span>
-                                    <span class="title">CART</span>
-                                </div>
+                                
+                                        <div class="left-info">
+                                        
+                                        <span class="index">{{ $cartCount }} items</span>
+                                            <span class="title">CART</span>
+                                        </div>
                             </a>
                         </div>
                         <div class="wrap-icon-section show-up-after-1024">
@@ -147,11 +154,11 @@
                                 <a href="{{ route('cart.index') }}" class="link-term mercado-item-title">Cart</a>
                             </li>
                             <li class="menu-item">
-                                <a href="checkout.html" class="link-term mercado-item-title">Checkout</a>
+                                <a href="{{ route('achat.articleClient') }}" class="link-term mercado-item-title">My purchases</a>
                             </li>
-                            <li class="menu-item">
+                            {{-- <li class="menu-item">
                                 <a href="contact-us.html" class="link-term mercado-item-title">Contact Us</a>
-                            </li>																	
+                            </li>																	 --}}
                         </ul>
                     </div>
                 </div>

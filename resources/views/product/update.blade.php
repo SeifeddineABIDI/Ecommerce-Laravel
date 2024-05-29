@@ -110,10 +110,10 @@
                     <label for="nom">Nom :</label>
                     <input type="text" id="nom" name="nom" value="{{$products ? $products->nom : ''}}">
                 </div>
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="catégorie">Catégorie :</label>
                     <input type="text" id="catégorie" name="catégorie" value="{{$products ? $products->categorie : ''}}">
-                </div>
+                </div> --}}
                 <div class="form-group">
                     <label for="quantite">Quantité :</label>
                     <input type="number" id="quantite" name="quantite" value="{{$products ? $products->quantite : ''}}">
@@ -122,15 +122,11 @@
                     <label for="prix_detail">Prix en détail :</label>
                     <input type="number" id="prix_detail" name="prix_detail" value="{{$products ? $products->prix_detail : ''}}">
                 </div>
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="image">Image :</label>
                     <input type="file" id="image" name="image" value="{{$products ? $products->image : ''}}">
-                </div>
-            </form>
-
-            <form action="/update/traitement" method="post">
-                @csrf
-                <div class="form-group">
+                </div> --}}
+              <div class="form-group">
                     <label for="prix_gros">Prix en gros :</label>
                     <input type="number" id="prix_gros" name="prix_gros" value="{{$products ? $products->prix_gros : ''}}">
                 </div>

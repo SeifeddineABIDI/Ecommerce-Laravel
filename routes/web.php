@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AchatController;
 use Illuminate\Support\Facades\Route;
 Route::prefix('')->group(base_path('routes/auth.php'));
 
@@ -44,6 +45,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/clear-cache', [CartController::class, 'clearCache'])->name('cart.clearCache');
     Route::post('/cart/clearcache', [CartController::class, 'clearJustCache'])->name('cart.clearCache');
+    Route::post('/achat/store', [AchatController::class, 'store'])->name('achat.store');
+    Route::post('/achat/confirmlocation', [AchatController::class, 'confirmlocation'])->name('achat.confirmlocation');
+    
+    Route::get('/article', [AchatController::class, 'viewPurchases'])->name('achat.articleClient');
+    Route::get('/updateArticle/{id}', [AchatController::class, 'update'])->name('achat.updateArticle');
+
+    Route::get('/articleVendeur', [AchatController::class, 'viewSales'])->name('achat.articleVendeur');
+    Route::post('/achat/{id}/add-review', [AchatController::class, 'addReview'])->name('achat.addReview');
+    Route::delete('/delete-categorie/{categorie}', [CategorieController::class, 'destroy'])->name('categories.destroy');
+    Route::delete('/sous_categories/{sousCategorie}', [SousCategorieController::class, 'destroy'])->name('sous_categories.destroy');
 
     
 });

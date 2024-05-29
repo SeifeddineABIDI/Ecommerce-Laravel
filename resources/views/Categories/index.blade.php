@@ -72,7 +72,11 @@
                     <td>{{ $categorie->description }}</td>
                     <td>
                         <!-- Actions (buttons, links, etc.) -->
-                        <a href='/delete-categorie/{{ $categorie->id }}' class="btn btn-danger">Delete</a>
+                        <form action="{{ route('categories.destroy', $categorie->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this category?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach

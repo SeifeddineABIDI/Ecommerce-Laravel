@@ -43,12 +43,12 @@
 				</ul>
 			</div>
 			<div class=" main-content-area">
-
+				
 				<div class="wrap-iten-in-cart">
 					<h3 class="box-title">Products Name</h3>
                     <ul class="products-cart" id="cart-items">
                         @foreach($products as $id => $product)
-						<li class="pr-cart-item" data-product-id="{{ $id }}">
+						<li class="pr-cart-item" data-product-id="{{ $product->id }}">
 							<div class="product-image">
                                 <figure><img src="{{ asset('uploads/products/' . $product['image']) }}" alt=""></figure>
                             </div>
@@ -58,15 +58,14 @@
                             <div class="price-field produtc-price"><p class="price">{{ $product['prix_gros'] }} TND</p></div>
 							<div class="quantity">
 								<div class="quantity-input">
-                                    <input type="number" name="product-quantity" value="1" min="1" data-max="120" data-price="{{ $product['prix_gros'] }}" pattern="[0-9]*" class="quantity-field">
+                                    <input type="number" name="product-quantity" value="{{ $cart[$product->id]['quantity']}}" min="{{ $product->quantite_gros }}" data-max="120" data-price="{{ $product['prix_gros'] }}" pattern="[0-9]*" class="quantity-field">
 									<a class="btn btn-increase" href="#"></a>
 									<a class="btn btn-reduce" href="#"></a>
 								</div>
 							</div>
                             <div class="price-field sub-total"><p class="price">{{ $product['prix_gros'] * 1 }} TND</p></div>
                             <div class="delete">
-                                <a href="{{ route('cart.remove', $id) }}" class="btn btn-delete" title="">
-                                    <span>Delete from your cart</span>
+                                <a href="{{ route('cart.remove', $product->id) }}" title="">
                                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </a>
                             </div>
@@ -76,6 +75,30 @@
 				</div>
 
 				<div class="summary">
+					@if (@$error)
+						aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+						<div class="alert alert-danger">
+							<ul>
+								<li>{{ $error }}</li>
+							</ul>
+						</div>
+						
+					@endif
+					<div class="order-summary">
+					<form action="{{ route('achat.store') }}" method="POST">
+						@csrf
+				
+						<div class="form-group">
+							<label for="map">Select Location</label>
+							<div id="map" style="height: 300px;"></div>
+							<input type="hidden" id="latitude" name="latitude" value="{{ auth()->user()->latitude }}">
+							<input type="hidden" id="longitude" name="longitude" value="{{ auth()->user()->longitude }}">
+						</div>
+						<div class="checkout-info">
+						<button type="submit" class="btn btn-checkout" id="checkout-btns" >Check out</button>
+						</div>
+					</form>
+					</div>
 					<div class="order-summary">
 						<h4 class="title-box">Order Summary</h4>
                         <p class="summary-info"><span class="title">Subtotal</span><b class="index">{{ $subtotal }} TND</b></p>
@@ -83,15 +106,12 @@
                         <p class="summary-info total-info"><span class="title">Total</span><b class="index">{{ $subtotal }} TND</b></p>
 					</div>
 					<div class="checkout-info">
-						<label class="checkbox-field">
-							<input class="frm-input " name="have-code" id="have-code" value="" type="checkbox"><span>I have promo code</span>
-						</label>
-                        <a class="btn btn-checkout" href="#" id="checkout-btn">Check out</a>
-						<a class="link-to-shop" href="shop.html">Continue Shopping<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+	
 					</div>
+
 					<div class="update-clear">
 						<a class="btn btn-clear" href="{{ route('cart.clearCache') }}">Clear Shopping Cart</a>
-						<a class="btn btn-update" href="#">Update Shopping Cart</a>
+						<a class="btn btn-update"  href="{{ route('shop.index') }}">Continue Shopping</a>
 					</div>
 				</div>
 
@@ -514,10 +534,10 @@
 	<script src="assets/js/functions.js"></script>
 	<!--footer area-->
     <script>
-document.addEventListener('DOMContentLoaded', function () {
+	document.addEventListener('DOMContentLoaded', function () {
     const cartItems = document.querySelectorAll('#cart-items .pr-cart-item');
 
-    cartItems.forEach(item => {
+	cartItems.forEach(item => {
         const quantityInput = item.querySelector('.quantity-field');
         const increaseButton = item.querySelector('.btn-increase');
         const decreaseButton = item.querySelector('.btn-reduce');
@@ -527,10 +547,20 @@ document.addEventListener('DOMContentLoaded', function () {
             const unitPrice = parseFloat(quantityInput.dataset.price);
             let quantity = parseInt(quantityInput.value);
 
+			let products = {!! json_encode($products) !!};
+
+			let product = products.find(itemZ => itemZ.id == item.dataset.productId);
+
             if (isNaN(quantity) || quantity < 1) {
+				console.log("quantity 1 ");
                 quantity = 1;
                 quantityInput.value = quantity;
-            }
+            }else{
+				if (quantity < product.quantite_gros) {
+					quantityInput.value = product.quantite_gros
+					return ; 
+				}
+			}
 
             const subTotal = unitPrice * quantity;
             subTotalField.textContent = subTotal.toFixed(2) + ' TND';
@@ -653,8 +683,55 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
     </script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb423ykEWarHHzXt-70jd1-TvsPazqQcM&libraries=places"></script>
+<script>
+    let map;
+    let marker;
+
+    function initMap() {
+        const userLat = parseFloat(document.getElementById('latitude').value) || 33.886917;
+        const userLng = parseFloat(document.getElementById('longitude').value) || 9.537499;
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: userLat, lng: userLng },
+            zoom: 8
+        });
+
+        if (userLat && userLng) {
+            marker = new google.maps.Marker({
+                position: { lat: userLat, lng: userLng },
+                map: map
+            });
+        }
+
+        map.addListener('click', function(event) {
+            placeMarker(event.latLng);
+        });
+
+        function placeMarker(location) {
+            if (marker) {
+                marker.setPosition(location);
+            } else {
+                marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+            }
+
+            document.getElementById('latitude').value = location.lat();
+            document.getElementById('longitude').value = location.lng();
+        }
+    }
+
+    google.maps.event.addDomListener(window, 'load', initMap);
+</script>
+
+
+
 </body>
 </html>
+
 
 <style>
     .container {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SousCategorie;
 use Illuminate\Http\Request;
 use App\Models\Categorie; // Ensure the Categorie model is imported
+use Illuminate\Support\Facades\Log;
 
 class SousCategorieController extends Controller
 {
@@ -41,7 +42,14 @@ class SousCategorieController extends Controller
     // Remove the specified sous-categorie from the database
     public function destroy(SousCategorie $sousCategorie)
     {
-        $sousCategorie->delete();
-        return redirect()->route('sous_categories.index')->with('success', 'Sous-categorie deleted successfully.');
+        Log::info('Deleting sous-categorie: ' . $sousCategorie->id);
+
+        try {
+            $sousCategorie->delete();
+            return redirect()->route('sous_categories.index')->with('success', 'Sous-categorie deleted successfully.');
+        } catch (\Exception $e) {
+            Log::error('Error deleting sous-categorie: ' . $e->getMessage());
+            return redirect()->route('sous_categories.index')->with('error', 'Sous-categorie could not be deleted.');
+        }
     }
 }

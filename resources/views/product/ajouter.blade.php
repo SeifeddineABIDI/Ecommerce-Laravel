@@ -125,10 +125,10 @@
         <label for="quantite">Quantité :</label>
         <input type="number" id="quantite" name="quantite" required>
     </div>
-    <div class="form-group">
+    {{-- <div class="form-group">
         <label for="prix_detail">Prix en détail :</label>
         <input type="number" id="prix_detail" name="prix_detail" required>
-    </div>
+    </div> --}}
     <div class="form-group">
         <label for="prix_gros">Prix en gros :</label>
         <input type="number" id="prix_gros" name="prix_gros" required>

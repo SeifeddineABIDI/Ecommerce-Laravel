@@ -81,7 +81,7 @@
                     <td>{{ $sousCategorie->description }}</td>
                     <td>{{ $sousCategorie->categorie->description }}</td>
                     <td>
-                        <form action="{{ route('sous_categories.destroy', $sousCategorie->id) }}" method="POST" style="display:inline-block;">
+                        <form action="{{ route('sous_categories.destroy', $sousCategorie->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to delete this sous-categorie?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Delete</button>

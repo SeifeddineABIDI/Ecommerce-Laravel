@@ -78,6 +78,9 @@
     </li>
 
     @if(auth()->user()->role == 'vendeur')
+    <li >
+      <i class="uil-shopping-cart-alt"></i> <a href="{{ route('achat.articleVendeur') }}">Sales </a>
+  </li>
     <li>
       <i class="uil-folder"></i><a href="{{ route('liste_produits') }}">Products</a>
     </li>
@@ -89,18 +92,10 @@
     
     <li class="">
         <i class="uil-folder"></i> <a href="{{ route('sous_categories.index') }}">Sous Categories</a> </li>
+       
         @endif
 
-    <li class="has-dropdown">
-        <i class="uil-shopping-cart-alt"></i><a href="#"> Ecommerce</a>
-        <ul class="sidebar-dropdown list-unstyled">
-            <li><a href="#">Set coupons</a></li>
-            <li><a href="#">Shipping </a></li>
-        </ul>
-    </li>
-    <li class="">
-        <i class="uil-map-marker"></i><a href="#"> Cache clear </a>
-    </li>
+  
 
 </ul>
 

@@ -29,8 +29,9 @@ class ProductController extends Controller
 
         public function list()
         {
+            $categories = Categorie::with('sous_categories')->get();
             $products = Product::all();
-            return view('shop.index', compact('products'));
+        return view('shop.index', compact('categories', 'products'));
         }
    
     public function ajouter_product_traitement(Request $request)
@@ -38,7 +39,7 @@ class ProductController extends Controller
         $request->validate([
             'nom' => 'required|string|max:255',
             'quantite' => 'required|integer',
-            'prix_detail' => 'required|numeric',
+            'prix_detail' => 'numeric',
             'prix_gros' => 'required|numeric',
             'quantite_gros' => 'required|integer',
             'description' => 'required|string',
@@ -49,7 +50,7 @@ class ProductController extends Controller
         $product = new Product();
         $product->nom = $request->nom;
         $product->quantite = $request->quantite;
-        $product->prix_detail = $request->prix_detail;
+        $product->prix_detail = 0;
         $product->prix_gros = $request->prix_gros;
         $product->quantite_gros = $request->quantite_gros;
         $product->description = $request->description;
@@ -77,20 +78,16 @@ class ProductController extends Controller
         $request->validate([
             'nom' => 'required',
             'quantite' => 'required',
-            'prix_detail' => 'required',
             'prix_gros' => 'required',
             'quantite_gros' => 'required',
             'description' => 'required',
-            'image' => 'required',
         ]);
         $product = Product::find($request->id);
         $product->nom = $request->nom;
         $product->quantite = $request->quantite; 
-        $product->prix_detail = $request->prix_detail; 
         $product->prix_gros = $request->prix_gros; 
         $product->quantite_gros = $request->quantite_gros; 
         $product->description = $request->description; 
-        $product->image = $request->image; 
         $product->update();
         return redirect('/product');
     }

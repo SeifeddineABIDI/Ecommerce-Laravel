@@ -14,11 +14,11 @@
       --dk-gray-600: #4B5563;
       --dk-gray-700: #374151;
       --dk-gray-800: #1F2937;
-      --dk-gray-900: #111827;
-      --dk-dark-bg: #313348;
-      --dk-darker-bg: #2a2b3d;
-      --navbar-bg-color: #6f6486;
-      --sidebar-bg-color: #252636;
+      --dk-gray-900: #053f66;
+      --dk-dark-bg: #053f66;
+      --dk-darker-bg: #053f66;
+      --navbar-bg-color: #022842;
+      --sidebar-bg-color: #032135;
       --sidebar-width: 250px;
   }
   
@@ -65,7 +65,7 @@
   }
   
   .sidebar .sidebar-header {
-      border-bottom: 1px solid #2a2b3c
+      border-bottom: 1px solid #333c2a
   }
   
   .sidebar .sidebar-header h5 a {
