@@ -10,8 +10,8 @@ use App\Http\Controllers\AchatController;
 use Illuminate\Support\Facades\Route;
 Route::prefix('')->group(base_path('routes/auth.php'));
 
-Route::get('/', function () {
-    return view('shop.welcome');});
+Route::get('/', [ProductController::class, 'shopWelcome']);
+
 Route::get('/about', function () {
     return view('shop.about');});
 Route::get('/dashboard', function () {

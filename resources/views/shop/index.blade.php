@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Digital & Electronics</title>
+    <title>Articles</title>
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,700,700italic,900,900italic&amp;subset=latin,latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open%20Sans:300,400,400italic,600,600italic,700,700italic&amp;subset=latin,latin-ext" rel="stylesheet">
@@ -29,7 +29,7 @@
             <div class="wrap-breadcrumb">
                 <ul>
                     <li class="item-link"><a href="#" class="link">home</a></li>
-                    <li class="item-link"><span>Digital & Electronics</span></li>
+                    <li class="item-link"><span>Products</span></li>
                 </ul>
             </div>
             <div class="row">

@@ -33,6 +33,12 @@ class ProductController extends Controller
             $products = Product::all();
         return view('shop.index', compact('categories', 'products'));
         }
+        public function shopWelcome()
+        {
+            $categories = Categorie::with('sous_categories')->get();
+            $products = Product::all();
+        return view('shop.welcome', compact('categories', 'products'));
+        }
    
     public function ajouter_product_traitement(Request $request)
     {

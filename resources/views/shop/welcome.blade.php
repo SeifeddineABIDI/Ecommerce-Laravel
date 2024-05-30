@@ -63,19 +63,20 @@
 			</div>
 
 			<!--On Sale-->
+			
 			<div class="wrap-show-advance-info-box style-1 has-countdown">
 				<h3 class="title-box">On Sale</h3>
 				<div class="wrap-countdown mercado-countdown" data-expire="2020/12/12 12:34:56"></div>
 				<div class="wrap-products slide-carousel owl-carousel style-nav-1 equal-container " data-items="5" data-loop="false" data-nav="true" data-dots="false" data-responsive='{"0":{"items":"1"},"480":{"items":"2"},"768":{"items":"3"},"992":{"items":"4"},"1200":{"items":"5"}}'>
-
+					@foreach($products as $product)
 					<div class="product product-style-2 equal-elem ">
 						<div class="product-thumnail">
 							<a href="detail.html" title="Iphone apple 13 pro-max">
-								<figure><img src="assets/images/products/smartphone4.jpg" width="800" height="800" alt="T-Shirt Raw Hem Organic Boro Constrast Denim"></figure>
+								<img src="{{ asset('uploads/products/' . $product->image) }}" alt="{{ $product->nom }}" class="product-image">
 							</a>
 							<div class="group-flash">
 							
-								<span class="flash-item sale-label">sale</span>
+								<span class="flash-item sale-label">{{ $product->nom }}</span>
 							</div>
 							<div class="wrap-btn">
 								<a href="#" class="function-link">quick view</a>
@@ -83,197 +84,46 @@
 						</div>
 						<div class="product-info">
 							<div class="card-price">
-								<span class="card-current-price">2000dt</span><span class="card-old-price">2500Dt</span>
+								<span class="card-current-price">{{ $product->prix_gros }} TND</span>
 							</div>
-							<a href="#" class="card-buy">
-								<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
-									<path d="M14.383 10.388a2.397 2.397 0 0 0-1.518-2.222l1.494-5.593a.8.8 0 0 0-.144-.695.8.8 0 0 0-.631-.28H2.637L2.373.591A.8.8 0 0 0 1.598 0H0v1.598h.983l1.982 7.4a.8.8 0 0 0 .799.59h8.222a.8.8 0 0 1 0 1.599H1.598a.8.8 0 1 0 0 1.598h.943a2.397 2.397 0 1 0 4.507 0h1.885a2.397 2.397 0 1 0 4.331-.376 2.397 2.397 0 0 0 1.12-2.021ZM11.26 7.99H4.395L3.068 3.196h9.477L11.26 7.991Zm-6.465 6.392a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Zm6.393 0a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Z" fill="#FFF" id="card-shop-icon"/>
-								</svg>
+							<a href="#" class="btn add-to-cart" data-product-id="{{ $product->id }}">Add To Cart</a>
+								
 								Add to cart
 							</a>
 							
 						</div>
+						<script>
+							document.addEventListener('DOMContentLoaded', function() {
+								document.querySelectorAll('.add-to-cart').forEach(function(button) {
+									button.addEventListener('click', function(event) {
+										event.preventDefault();
+										let productId = this.getAttribute('data-product-id');
+										let form = document.createElement('form');
+										form.method = 'POST';
+										form.action = '{{ route('cart.add') }}';
+										let token = document.createElement('input');
+										token.type = 'hidden';
+										token.name = '_token';
+										token.value = '{{ csrf_token() }}';
+										form.appendChild(token);
+										let input = document.createElement('input');
+										input.type = 'hidden';
+										input.name = 'product_id';
+										input.value = productId;
+										form.appendChild(input);
+										document.body.appendChild(form);
+										form.submit();
+									});
+								});
+							});
+						</script>
 					</div>
+					@endforeach
 
-					<div class="product product-style-2 equal-elem ">
-						<div class="product-thumnail">
-							<a href="detail.html" title="Gold watch Lotus for women">
-								<figure><img src="assets/images/products/watch2.jpg" width="800" height="800" alt="T-Shirt Raw Hem Organic Boro Constrast Denim"></figure>
-							</a>
-							<div class="group-flash">
-								<span class="flash-item sale-label">sale</span>
-							</div>
-							<div class="wrap-btn">
-								<a href="#" class="function-link">quick view</a>
-							</div>
-						</div>
-						<div class="product-info">
-							<div class="card-price">
-								<span class="card-current-price">750dt</span><span class="card-old-price">800dt</span>
-							</div>
-							<a href="#" class="card-buy">
-								<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
-									<path d="M14.383 10.388a2.397 2.397 0 0 0-1.518-2.222l1.494-5.593a.8.8 0 0 0-.144-.695.8.8 0 0 0-.631-.28H2.637L2.373.591A.8.8 0 0 0 1.598 0H0v1.598h.983l1.982 7.4a.8.8 0 0 0 .799.59h8.222a.8.8 0 0 1 0 1.599H1.598a.8.8 0 1 0 0 1.598h.943a2.397 2.397 0 1 0 4.507 0h1.885a2.397 2.397 0 1 0 4.331-.376 2.397 2.397 0 0 0 1.12-2.021ZM11.26 7.99H4.395L3.068 3.196h9.477L11.26 7.991Zm-6.465 6.392a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Zm6.393 0a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Z" fill="#FFF" id="card-shop-icon"/>
-								</svg>
-								Add to cart
-							</a>
-							
-						</div>
-					</div>
-					<div class="product product-style-2 equal-elem ">
-						<div class="product-thumnail">
-							<a href="detail.html" title="Gaming keyboard">
-								<figure><img src="assets/images/products/keyboard.jpg" width="800" height="800" alt="T-Shirt Raw Hem Organic Boro Constrast Denim"></figure>
-							</a>
-							<div class="group-flash">
-							
-								<span class="flash-item sale-label">sale</span>
-							</div>
-							<div class="wrap-btn">
-								<a href="#" class="function-link">quick view</a>
-							</div>
-						</div>
-						<div class="product-info">
-							<div class="card-price">
-								<span class="card-current-price">100dt</span><span class="card-old-price">150Dt</span>
-							</div>
-							<a href="#" class="card-buy">
-								<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
-									<path d="M14.383 10.388a2.397 2.397 0 0 0-1.518-2.222l1.494-5.593a.8.8 0 0 0-.144-.695.8.8 0 0 0-.631-.28H2.637L2.373.591A.8.8 0 0 0 1.598 0H0v1.598h.983l1.982 7.4a.8.8 0 0 0 .799.59h8.222a.8.8 0 0 1 0 1.599H1.598a.8.8 0 1 0 0 1.598h.943a2.397 2.397 0 1 0 4.507 0h1.885a2.397 2.397 0 1 0 4.331-.376 2.397 2.397 0 0 0 1.12-2.021ZM11.26 7.99H4.395L3.068 3.196h9.477L11.26 7.991Zm-6.465 6.392a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Zm6.393 0a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Z" fill="#FFF" id="card-shop-icon"/>
-								</svg>
-								Add to cart
-							</a>
-						</div>
-					</div>
-					<div class="product product-style-2 equal-elem ">
-						<div class="product-thumnail">
-							<a href="detail.html" title="Black headset">
-								<figure><img src="assets/images/products/casque.jpg" width="800" height="800" alt=""></figure>
-							</a>
-							<div class="group-flash">
-								<span class="flash-item sale-label">sale</span>
-							</div>
-							<div class="wrap-btn">
-								<a href="#" class="function-link">quick view</a>
-							</div>
-						</div>
-						<div class="product-info">
-							
-							<div class="card-price">
-								<span class="card-current-price">40dt</span><span class="card-old-price">50dt</span>
-							</div>
-							<a href="#" class="card-buy">
-								<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
-									<path d="M14.383 10.388a2.397 2.397 0 0 0-1.518-2.222l1.494-5.593a.8.8 0 0 0-.144-.695.8.8 0 0 0-.631-.28H2.637L2.373.591A.8.8 0 0 0 1.598 0H0v1.598h.983l1.982 7.4a.8.8 0 0 0 .799.59h8.222a.8.8 0 0 1 0 1.599H1.598a.8.8 0 1 0 0 1.598h.943a2.397 2.397 0 1 0 4.507 0h1.885a2.397 2.397 0 1 0 4.331-.376 2.397 2.397 0 0 0 1.12-2.021ZM11.26 7.99H4.395L3.068 3.196h9.477L11.26 7.991Zm-6.465 6.392a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Zm6.393 0a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Z" fill="#FFF" id="card-shop-icon"/>
-								</svg>
-								Add to cart
-							</a>
-							
-						</div>
-					</div>
-					<div class="product product-style-2 equal-elem ">
-						<div class="product-thumnail">
-							<a href="detail.html" title="Coros GPS 900.">
-								<figure><img src="assets/images/products/watch6.jpg" width="800" height="800" alt=""></figure>
-							</a>
-							<div class="group-flash">
-								<span class="flash-item sale-label">sale</span>
-							</div>
-							<div class="wrap-btn">
-								<a href="#" class="function-link">quick view</a>
-							</div>
-						</div>
-						<div class="product-info">
-							
-							<div class="card-price">
-								<span class="card-current-price">550dt</span><span class="card-old-price">600dt</span>
-							</div>
-							<a href="#" class="card-buy">
-								<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
-									<path d="M14.383 10.388a2.397 2.397 0 0 0-1.518-2.222l1.494-5.593a.8.8 0 0 0-.144-.695.8.8 0 0 0-.631-.28H2.637L2.373.591A.8.8 0 0 0 1.598 0H0v1.598h.983l1.982 7.4a.8.8 0 0 0 .799.59h8.222a.8.8 0 0 1 0 1.599H1.598a.8.8 0 1 0 0 1.598h.943a2.397 2.397 0 1 0 4.507 0h1.885a2.397 2.397 0 1 0 4.331-.376 2.397 2.397 0 0 0 1.12-2.021ZM11.26 7.99H4.395L3.068 3.196h9.477L11.26 7.991Zm-6.465 6.392a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Zm6.393 0a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Z" fill="#FFF" id="card-shop-icon"/>
-								</svg>
-								Add to cart
-							</a>
-							
-						</div>
-					</div>
-					<div class="product product-style-2 equal-elem ">
-						<div class="product-thumnail">
-							<a href="detail.html" title="Samsung Galaxy M34 5G">
-								<figure><img src="assets/images/products/smartphone5.jpg" width="800" height="800" alt="T-Shirt Raw Hem Organic Boro Constrast Denim"></figure>
-							</a>
-							<div class="group-flash">
-								<span class="flash-item sale-label">sale</span>
-							</div>
-							<div class="wrap-btn">
-								<a href="#" class="function-link">quick view</a>
-							</div>
-						</div>
-						<div class="product-info">
-							<div class="card-price">
-								<span class="card-current-price">300dt</span><span class="card-old-price">400Dt</span>
-							</div>
-							<a href="#" class="card-buy">
-								<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
-									<path d="M14.383 10.388a2.397 2.397 0 0 0-1.518-2.222l1.494-5.593a.8.8 0 0 0-.144-.695.8.8 0 0 0-.631-.28H2.637L2.373.591A.8.8 0 0 0 1.598 0H0v1.598h.983l1.982 7.4a.8.8 0 0 0 .799.59h8.222a.8.8 0 0 1 0 1.599H1.598a.8.8 0 1 0 0 1.598h.943a2.397 2.397 0 1 0 4.507 0h1.885a2.397 2.397 0 1 0 4.331-.376 2.397 2.397 0 0 0 1.12-2.021ZM11.26 7.99H4.395L3.068 3.196h9.477L11.26 7.991Zm-6.465 6.392a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Zm6.393 0a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Z" fill="#FFF" id="card-shop-icon"/>
-								</svg>
-								Add to cart
-							</a>
-							
-						</div>
-					</div>
-					<div class="product product-style-2 equal-elem ">
-						<div class="product-thumnail">
-							<a href="detail.html" title=" Coros GPS 900.">
-								<figure><img src="assets/images/products/watch5.jpg" width="800" height="800" alt="T-Shirt Raw Hem Organic Boro Constrast Denim"></figure>
-							</a>
-							<div class="group-flash">
-								<span class="flash-item sale-label">sale</span>
-							</div>
-							<div class="wrap-btn">
-								<a href="#" class="function-link">quick view</a>
-							</div>
-						</div>
-						<div class="product-info">
-							<div class="card-price">
-								<span class="card-current-price">400dt</span><span class="card-old-price">600Dt</span>
-							</div>
-							<a href="#" class="card-buy">
-								<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
-									<path d="M14.383 10.388a2.397 2.397 0 0 0-1.518-2.222l1.494-5.593a.8.8 0 0 0-.144-.695.8.8 0 0 0-.631-.28H2.637L2.373.591A.8.8 0 0 0 1.598 0H0v1.598h.983l1.982 7.4a.8.8 0 0 0 .799.59h8.222a.8.8 0 0 1 0 1.599H1.598a.8.8 0 1 0 0 1.598h.943a2.397 2.397 0 1 0 4.507 0h1.885a2.397 2.397 0 1 0 4.331-.376 2.397 2.397 0 0 0 1.12-2.021ZM11.26 7.99H4.395L3.068 3.196h9.477L11.26 7.991Zm-6.465 6.392a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Zm6.393 0a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Z" fill="#FFF" id="card-shop-icon"/>
-								</svg>
-								Add to cart
-							</a>
-							
-						</div>
-					</div>
 
-					<div class="product product-style-2 equal-elem ">
-						<div class="product-thumnail">
-							<a href="detail.html" title="T-Shirt Raw Hem Organic Boro Constrast Denim">
-								<figure><img src="assets/images/products/smartphone8.jpg" width="800" height="800" alt=""></figure>
-							</a>
-							<div class="group-flash">
-								<span class="flash-item sale-label">sale</span>
-							</div>
-							<div class="wrap-btn">
-								<a href="#" class="function-link">quick view</a>
-							</div>
-						</div>
-						<div class="product-info">
-							
-							<div class="card-price">
-								<span class="card-current-price">37,5dt</span><span class="card-old-price">50dt</span>
-							</div>
-							<a href="#" class="card-buy">
-								<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
-									<path d="M14.383 10.388a2.397 2.397 0 0 0-1.518-2.222l1.494-5.593a.8.8 0 0 0-.144-.695.8.8 0 0 0-.631-.28H2.637L2.373.591A.8.8 0 0 0 1.598 0H0v1.598h.983l1.982 7.4a.8.8 0 0 0 .799.59h8.222a.8.8 0 0 1 0 1.599H1.598a.8.8 0 1 0 0 1.598h.943a2.397 2.397 0 1 0 4.507 0h1.885a2.397 2.397 0 1 0 4.331-.376 2.397 2.397 0 0 0 1.12-2.021ZM11.26 7.99H4.395L3.068 3.196h9.477L11.26 7.991Zm-6.465 6.392a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Zm6.393 0a.8.8 0 1 1 0-1.598.8.8 0 0 1 0 1.598Z" fill="#FFF" id="card-shop-icon"/>
-								</svg>
-								Add to cart
-							</a>
-							
-						</div>
 					</div>
+					
+			
 
 				</div>
 			</div>
