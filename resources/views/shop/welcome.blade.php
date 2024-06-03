@@ -69,7 +69,7 @@
 				<div class="wrap-countdown mercado-countdown" data-expire="2020/12/12 12:34:56"></div>
 				<div class="wrap-products slide-carousel owl-carousel style-nav-1 equal-container " data-items="5" data-loop="false" data-nav="true" data-dots="false" data-responsive='{"0":{"items":"1"},"480":{"items":"2"},"768":{"items":"3"},"992":{"items":"4"},"1200":{"items":"5"}}'>
 					@foreach($products as $product)
-					<div class="product product-style-2 equal-elem ">
+					<div class="product product-style-2 equal-elem " href="{{ route('product.show', $product->id) }}">
 						<div class="product-thumnail">
 							<a href="detail.html" title="Iphone apple 13 pro-max">
 								<img src="{{ asset('uploads/products/' . $product->image) }}" alt="{{ $product->nom }}" class="product-image">
