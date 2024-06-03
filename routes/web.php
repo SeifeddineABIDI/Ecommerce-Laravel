@@ -37,8 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', CategorieController::class);
     Route::resource('sous_categories', SousCategorieController::class);
     Route::get('/shop', [ProductController::class, 'list'])->name('shop.index');
-    Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
-    //CartRoutes
+    Route::get('/product/{id}', [ProductController::class, 'show_details'])->name('product.show');
+        //CartRoutes
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');

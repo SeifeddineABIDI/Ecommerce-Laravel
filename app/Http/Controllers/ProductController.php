@@ -103,13 +103,10 @@ public function delete_product($id){
     $product->delete();
     return redirect('/product');
 }
-public function show($id)
+public function show_details($id)
 {
-    $product = Product::find($id);
-    if (!$product) {
-        return redirect()->back()->with('error', 'Product not found!');
-    }
-    return view('product.details', compact('product'));
+    $product = Product::findOrFail($id);
+    return view('product.detail', compact('product'));
 }
     /**
      * Show the form for editing the specified resource.
